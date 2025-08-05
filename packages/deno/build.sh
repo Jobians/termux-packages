@@ -186,6 +186,9 @@ termux_step_make() {
 	echo "Using cmake at: $(which cmake)"
 	echo "CMake version: $(cmake --version)"
 
+	# Fix the CMake policy version issue
+	export CMAKE_POLICY_VERSION_MINIMUM=3.5
+
 	local env_name=${CARGO_TARGET_NAME@U}
 	env_name=${env_name//-/_}
 	export RUSTY_V8_ARCHIVE_${env_name}="${TERMUX_PREFIX}/lib/librusty_v8.a"
@@ -198,7 +201,6 @@ termux_step_make() {
 		export PKG_CONFIG_LIBDIR=/usr/lib/pkgconfig
 	fi
 
-	# ld.lld: error: undefined symbol: __clear_cache
 	if [[ "${TERMUX_ARCH}" == "aarch64" ]]; then
 		export CARGO_TARGET_${env_name}_RUSTFLAGS+=" -C link-arg=$($CC -print-libgcc-file-name)"
 	fi
