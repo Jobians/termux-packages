@@ -1,0 +1,9 @@
+diff --git a/src/heap/code-range.cc b/src/heap/code-range.cc
+index 0123456..abcdef0 100644
+--- a/src/heap/code-range.cc
++++ b/src/heap/code-range.cc
+@@ -1,3 +1,7 @@
++// Patch: Define TRACE(...) macro if missing
++#ifndef TRACE
++#define TRACE(...) ((void)0)
++#endif
