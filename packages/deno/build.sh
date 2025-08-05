@@ -72,7 +72,10 @@ termux_step_pre_configure() {
 
 __fetch_rusty_v8() {
 	pushd "$TERMUX_PKG_SRCDIR"
+
 	local v8_version=$(cargo info v8 | grep -e "^version:" | sed -n 's/^version:[[:space:]]*\([0-9.]*\).*/\1/p')
+	echo "📦 Detected V8 version: $v8_version"
+
 	if [ ! -d "$TERMUX_PKG_SRCDIR"/librusty_v8 ]; then
 		rm -rf "$TERMUX_PKG_SRCDIR"/librusty_v8-tmp
 		git init librusty_v8-tmp
@@ -81,21 +84,23 @@ __fetch_rusty_v8() {
 		git fetch --depth=1 origin v"$v8_version"
 		git reset --hard FETCH_HEAD
 		git submodule update --init --recursive --depth=1
+
 		local f
 		for f in $(find "$TERMUX_PKG_BUILDER_DIR/jumbo-patches" -maxdepth 1 -type f -name *.patch | sort); do
 			echo "Applying patch: $(basename $f)"
 			patch --silent -p1 < "$f"
 		done
 
-                # Apply changes
+		# ✅ After patching, rename TRACE to TRACE_IN_CODE_RANGE (in case any remain unpatched)
 		sed -i 's/\<TRACE(/TRACE_IN_CODE_RANGE(/g' ./v8/src/heap/code-range.cc
-  
-                # Show remaining TRACE calls (excluding the renamed ones)
+
+		# ✅ Show remaining TRACE calls (excluding renamed ones)
 		echo "TRACE replacements after patching:"
-                grep TRACE ./v8/src/heap/code-range.cc | grep -v TRACE_IN_CODE_RANGE || echo "✅ No raw TRACE() found."
+		grep TRACE ./v8/src/heap/code-range.cc | grep -v TRACE_IN_CODE_RANGE || echo "✅ No raw TRACE() found."
 
 		mv "$TERMUX_PKG_SRCDIR"/librusty_v8-tmp "$TERMUX_PKG_SRCDIR"/librusty_v8
 	fi
+
 	popd # "$TERMUX_PKG_SRCDIR"
 }
 
