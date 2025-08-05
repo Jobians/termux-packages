@@ -183,6 +183,8 @@ termux_step_make() {
 	termux_setup_rust
 	termux_setup_cmake
 	termux_setup_protobuf
+        echo "Using cmake at: $(which cmake)"
+	echo "CMake version: $(cmake --version)"
 
 	local env_name=${CARGO_TARGET_NAME@U}
 	env_name=${env_name//-/_}
