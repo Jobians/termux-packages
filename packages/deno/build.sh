@@ -86,6 +86,14 @@ __fetch_rusty_v8() {
 			echo "Applying patch: $(basename $f)"
 			patch --silent -p1 < "$f"
 		done
+
+                # Apply changes
+		sed -i 's/\<TRACE(/TRACE_IN_CODE_RANGE(/g' ./v8/src/heap/code-range.cc
+  
+                # Show remaining TRACE calls (excluding the renamed ones)
+		echo "TRACE replacements after patching:"
+                grep TRACE ./v8/src/heap/code-range.cc | grep -v TRACE_IN_CODE_RANGE || echo "✅ No raw TRACE() found."
+
 		mv "$TERMUX_PKG_SRCDIR"/librusty_v8-tmp "$TERMUX_PKG_SRCDIR"/librusty_v8
 	fi
 	popd # "$TERMUX_PKG_SRCDIR"
