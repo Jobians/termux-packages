@@ -1,0 +1,17 @@
+diff --git a/v8/src/heap/code-range.cc b/v8/src/heap/code-range.cc
+index f27881f3cc..abc1234567 100644
+--- a/v8/src/heap/code-range.cc
++++ b/v8/src/heap/code-range.cc
+@@ -209,8 +209,10 @@ bool CodeRange::InitReservation(v8::PageAllocator* page_allocator,
+         reinterpret_cast<void*>(region().begin()),
+         reinterpret_cast<void*>(region().end()));
+ 
+-    TRACE("=== non-allocatable region: [%p, %p)\n",
+-        reinterpret_cast<void*>(params.requested_start_hint),
+-        reinterpret_cast<void*>(region().begin()));
+-    TRACE("=== Exclude the first page from allocatable area\n");
++    TRACE_IN_CODE_RANGE("=== non-allocatable region: [%p, %p)\n",
++                        reinterpret_cast<void*>(params.requested_start_hint),
++                        reinterpret_cast<void*>(region().begin()));
++    TRACE_IN_CODE_RANGE("=== Exclude the first page from allocatable area\n");
+   }
