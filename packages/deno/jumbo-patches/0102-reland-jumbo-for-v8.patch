@@ -370,15 +370,17 @@ index a5e29a8beb..8bdfbf0ed4 100644
  #include "src/compiler/turboshaft/loop-finder.h"
  
  #ifdef DEBUG
--#define TRACE(x)                                                               \
-+#define TRACE_IN_LOOP_UNROLLING_REDUCER(x)                                                               \
-   do {                                                                         \
-     if (v8_flags.turboshaft_trace_unrolling) StdoutStream() << x << std::endl; \
-   } while (false)
- #else
+-#define TRACE(x) \
++#define TRACE(x) \
++#define TRACE_IN_LOOP_UNROLLING_REDUCER(x) \
+  do { \
+    if (v8_flags.turboshaft_trace_unrolling) StdoutStream() << x << std::endl; \
+  } while (false)
+#else
 -#define TRACE(x)
++#define TRACE(x)
 +#define TRACE_IN_LOOP_UNROLLING_REDUCER(x)
- #endif
+#endif
  
  namespace v8::internal::compiler::turboshaft {
 @@ -27,7 +27,7 @@ using BinOp = StaticCanonicalForLoopMatcher::BinOp;
