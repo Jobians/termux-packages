@@ -129,10 +129,7 @@ use_jumbo_build=true
 		EXTRA_GN_ARGS+=" arm_float_abi = \"softfp\""
 	fi
 
-	# shellcheck disable=SC2155 # Ignore command exit-code
 	export GN="$(command -v gn)"
-
-	# Make build.rs happy
 	ln -sf "$NDK" "$__SRC_DIR"/third_party/android_ndk
 
 	BINDGEN_EXTRA_CLANG_ARGS="--target=$CCTERMUX_HOST_PLATFORM"
@@ -142,14 +139,25 @@ use_jumbo_build=true
 	env_name=${env_name//-/_}
 	export "$env_name"="$BINDGEN_EXTRA_CLANG_ARGS"
 
+	# ✅ CMake and compiler setup for aws-lc-sys
+	export CMAKE_TOOLCHAIN_FILE="$NDK/build/cmake/android.toolchain.cmake"
+	export CC="${TERMUX_HOST_PLATFORM}-clang"
+	export CXX="${TERMUX_HOST_PLATFORM}-clang++"
+
+	# 🔍 Echo relevant build variables
+	echo "📦 Building V8 from source with the following settings:"
+	echo "  ├─ CMAKE_TOOLCHAIN_FILE: $CMAKE_TOOLCHAIN_FILE"
+	echo "  ├─ CC: $CC"
+	echo "  ├─ CXX: $CXX"
+	echo "  ├─ GN: $GN"
+	echo "  └─ EXTRA_GN_ARGS: $EXTRA_GN_ARGS"
+
 	export V8_FROM_SOURCE=1
-	# TODO: How to track the output of v8's build.rs without passing `-vv`
 	cargo build --jobs "${TERMUX_PKG_MAKE_PROCESSES}" --target "${CARGO_TARGET_NAME}" --release
 
 	unset BINDGEN_EXTRA_CLANG_ARGS "$env_name" V8_FROM_SOURCE
 	touch "$__SRC_DIR"/.built
-
-	popd # "$__SRC_DIR"
+	popd
 }
 
 __install_rusty_v8() {
