@@ -1,18 +1,18 @@
 TERMUX_PKG_HOMEPAGE=https://deno.land/
 TERMUX_PKG_DESCRIPTION="A modern runtime for JavaScript and TypeScript"
 TERMUX_PKG_LICENSE="MIT"
-TERMUX_PKG_MAINTAINER="@licy183"
-TERMUX_PKG_VERSION=1:2.2.13
+TERMUX_PKG_MAINTAINER="@JOBIANSTECHIE"
+TERMUX_PKG_VERSION=1:2.4.3
 TERMUX_PKG_REVISION=1
 TERMUX_PKG_SRCURL=(
-	https://github.com/denoland/deno/releases/download/v${TERMUX_PKG_VERSION:2}/deno_src.tar.gz
-	https://github.com/licy183/deno-snapshot/releases/download/v${TERMUX_PKG_VERSION:2}/deno-snapshot-aarch64-linux-android-${TERMUX_PKG_VERSION:2}.tar.bz2
-	https://github.com/licy183/deno-snapshot/releases/download/v${TERMUX_PKG_VERSION:2}/deno-snapshot-x86_64-linux-android-${TERMUX_PKG_VERSION:2}.tar.bz2
+	https://github.com/Jobians/deno-termux-source/releases/download/v${TERMUX_PKG_VERSION:2}/deno_src.tar.gz
+	https://github.com/Jobians/deno-snapshot/releases/download/v${TERMUX_PKG_VERSION:2}/deno-snapshot-aarch64-linux-android-${TERMUX_PKG_VERSION:2}.tar.bz2
+	https://github.com/Jobians/deno-snapshot/releases/download/v${TERMUX_PKG_VERSION:2}/deno-snapshot-x86_64-linux-android-${TERMUX_PKG_VERSION:2}.tar.bz2
 )
 TERMUX_PKG_SHA256=(
-	ed6c40be562394aa72251c3bd77432374e328cf0024226daadaba1b3486c2a68
-	e39aa39e6d7d4816b6b75de0380cf272e4d9b1454f70d270eb88b17bae1143a8
-	210f7fb75039a2978d20d19a5ff05a601f4940626d019033dc29b7ca288c8040
+	dc776d3fb54656778279a09301379e17e1a7c88413e86674dbe03687cfd87f9e
+	4cd494f75a317a1c16444767a19f04eab3f7cd345327c3383ea237ed81860010
+	681181c9478c11bf37df1a578a56a187fc3bf76d17ff87817685e66d338d0465
 )
 TERMUX_PKG_DEPENDS="libandroid-stub, libffi, libsqlite, zlib"
 TERMUX_PKG_BUILD_IN_SRC=true
