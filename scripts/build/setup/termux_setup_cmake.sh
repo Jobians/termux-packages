@@ -44,4 +44,5 @@ termux_setup_cmake() {
 	fi
 
 	export PATH="${TERMUX_CMAKE_FOLDER}/bin:${PATH}"
+        export CMAKE="${TERMUX_CMAKE_FOLDER}/bin/cmake"
 }
