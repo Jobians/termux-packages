@@ -1,7 +1,0 @@
---- src/heap/code-range.cc
-+++ src/heap/code-range.cc
-@@ -0,0 +1,4 @@
-+// Patch: Define TRACE(...) macro if missing
-+#ifndef TRACE
-+#define TRACE(...) ((void)0)
-+#endif
